@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Link, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import Home from './pages/Home'
+import Something from './pages/Something';
+import About from './pages/About';
+import Users, { loader } from './pages/Users';
+import UsersLayouts from './layouts/UsersLayouts';
+import FormPage, { action } from './pages/FormPage';
 
+
+const routes = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+        <Route path='/' element={<UsersLayouts />}>
+          <Route index element={<Home />} />
+          <Route path='about' element={<About />} />
+          <Route path='something' element={<Something />} />
+          <Route path='/users' element={<Users />} loader={loader} />
+        </Route>
+
+        <Route path='/form-page' element={<FormPage />} action={action} />
+    </Route>
+  )
+)
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <RouterProvider router={routes}/>
 }
 
 export default App;
